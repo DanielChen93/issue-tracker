@@ -16,11 +16,11 @@ const IssueDetailPage = async ({ params }: Props) => {
   return (
     <div>
       <Heading>{issue.title}</Heading>
-      <Flex gap="3" my="5">
+      <Flex gap="3" my="2">
         <IssueStatusBadge status={issue.status} />
         <div>{issue.createdAt.toDateString()}</div>
       </Flex>
-      <Card className="prose" mt="5">
+      <Card className="prose" mt="4">
         <MarkDown>{issue.description}</MarkDown>
       </Card>
     </div>
