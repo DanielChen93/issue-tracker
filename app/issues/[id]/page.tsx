@@ -2,8 +2,8 @@ import React from "react";
 import prisma from "@/prisma/client";
 import { notFound } from "next/navigation";
 import { Card, Flex, Heading } from "@radix-ui/themes";
-import IssueStatusBadge from "@/app/components/IssueStatusBadge";
 import MarkDown from "react-markdown";
+import { IssueStatusBadge } from "@/app/components";
 
 interface Props {
   params: { id: string };
