@@ -9,13 +9,9 @@ import z from "zod";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { IssueSchema } from "@/app/validationSchemas";
-import dynamic from "next/dynamic";
 import { ErrorMessage, Spinner } from "@/app/components";
 import { Issue } from "@prisma/client";
-
-const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
-  ssr: false,
-});
+import SimpleMDE from "react-simplemde-editor";
 
 type IssueFormData = z.infer<typeof IssueSchema>;
 
