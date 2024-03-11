@@ -1,10 +1,11 @@
-import { Table, TableRowHeaderCell, TableRow } from "@radix-ui/themes";
+import { Table, TableRow, TableRowHeaderCell } from "@radix-ui/themes";
+import React from "react";
+import prisma from "@/prisma/client";
 import IssueActions from "./IssueActions";
-import { Skeleton } from "../components";
+import { IssueStatusBadge, Link } from "../../components";
 
-const IssuesLoading = () => {
-  const issues = [1, 2, 3, 4, 5];
-
+const Issues = async () => {
+  const issues = await prisma.issue.findMany();
   return (
     <div>
       <IssueActions />
@@ -22,15 +23,18 @@ const IssuesLoading = () => {
         </Table.Header>
         <Table.Body>
           {issues.map((issue) => (
-            <TableRow key={issue}>
+            <TableRow key={issue.id}>
               <Table.Cell>
-                <Skeleton />
+                <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
+                <div className="block md:hidden">
+                  <IssueStatusBadge status={issue.status} />
+                </div>
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                <Skeleton />
+                <IssueStatusBadge status={issue.status} />
               </Table.Cell>
               <Table.Cell className="hidden md:table-cell">
-                <Skeleton />
+                {issue.createdAt.toDateString()}
               </Table.Cell>
             </TableRow>
           ))}
@@ -40,4 +44,6 @@ const IssuesLoading = () => {
   );
 };
 
-export default IssuesLoading;
+export const revalidate = 0;
+
+export default Issues;
