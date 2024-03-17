@@ -5,7 +5,7 @@ import { Select } from "@radix-ui/themes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Skeleton from "@/app/components/Skeleton";
-
+import toast, { Toaster } from "react-hot-toast";
 const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   const {
     data: users,
@@ -24,27 +24,34 @@ const AssigneeSelect = ({ issue }: { issue: Issue }) => {
   if (error) return null;
 
   return (
-    <Select.Root
-      onValueChange={(userId) => {
-        axios.patch("/api/issues/" + issue.id, {
-          assignedUserId: userId === "Unassigned" ? null : userId,
-        });
-      }}
-      defaultValue={issue.assignedUserId || "Unassigned"}
-    >
-      <Select.Trigger placeholder="Assign..." />
-      <Select.Content>
-        <Select.Group>
-          <Select.Label>Suggestions</Select.Label>
-          <Select.Item value="Unassigned">Unassigned</Select.Item>
-          {users?.map((user) => (
-            <Select.Item key={user.id} value={user.id}>
-              {user.name}
-            </Select.Item>
-          ))}
-        </Select.Group>
-      </Select.Content>
-    </Select.Root>
+    <>
+      <Select.Root
+        onValueChange={(userId) => {
+          axios
+            .patch("/api/issues/" + issue.id, {
+              assignedUserId: userId === "Unassigned" ? null : userId,
+            })
+            .catch((e) => {
+              toast.error("Changes could not be saved");
+            });
+        }}
+        defaultValue={issue.assignedUserId || "Unassigned"}
+      >
+        <Select.Trigger placeholder="Assign..." />
+        <Select.Content>
+          <Select.Group>
+            <Select.Label>Suggestions</Select.Label>
+            <Select.Item value="Unassigned">Unassigned</Select.Item>
+            {users?.map((user) => (
+              <Select.Item key={user.id} value={user.id}>
+                {user.name}
+              </Select.Item>
+            ))}
+          </Select.Group>
+        </Select.Content>
+      </Select.Root>
+      <Toaster />
+    </>
   );
 };
 
