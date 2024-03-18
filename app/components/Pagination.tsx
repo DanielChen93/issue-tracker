@@ -32,7 +32,7 @@ const Pagination = ({ itemCount, pageSize, currentPage }: Props) => {
 
   return (
     <Flex gap="2" align="center">
-      {currentPage}/{pageCount}
+      Page {currentPage} of {pageCount}
       <Button
         onClick={() => changePage(1)}
         disabled={currentPage === 1}
