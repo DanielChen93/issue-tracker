@@ -4,12 +4,14 @@ import Link from "next/link";
 import React from "react";
 
 interface Props {
-  open: number;
-  inProgress: number;
-  closed: number;
+  issueCount: {
+    open: number;
+    inProgress: number;
+    closed: number;
+  };
 }
 
-const IssueSummary = ({ open, inProgress, closed }: Props) => {
+const IssueSummary = ({ issueCount: { open, inProgress, closed } }: Props) => {
   const containers: { label: string; value: number; status: Status }[] = [
     { label: "Open Issues", value: open, status: "OPEN" },
     { label: "In-progress Issues", value: inProgress, status: "IN_PROGRESS" },

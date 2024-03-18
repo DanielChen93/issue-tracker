@@ -4,12 +4,14 @@ import { Card } from "@radix-ui/themes";
 import { ResponsiveContainer, BarChart, XAxis, YAxis, Bar } from "recharts";
 
 interface Props {
-  open: number;
-  inProgress: number;
-  closed: number;
+  issueCount: {
+    open: number;
+    inProgress: number;
+    closed: number;
+  };
 }
 
-const IssueChart = ({ open, inProgress, closed }: Props) => {
+const IssueChart = ({ issueCount: { open, inProgress, closed } }: Props) => {
   const data: { label: string; value: number }[] = [
     { label: "Open", value: open },
     { label: "In-progress", value: inProgress },
